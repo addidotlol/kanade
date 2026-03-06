@@ -87,12 +87,6 @@ PlayState.onState(unloads, async () => {
 	await pushState();
 });
 
-// Periodic currentTime updates during playback
-safeInterval(unloads, async () => {
-	if (!PlayState.playing || !currentMediaItem) return;
-	await pushState();
-}, 1000);
-
 // Initialize from current playback context
 try {
 	const mediaItem = await MediaItem.fromPlaybackContext();

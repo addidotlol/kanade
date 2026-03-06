@@ -32,6 +32,7 @@ let currentState: NowPlayingState = { ...defaultState };
 let server: http.Server | null = null;
 const sseClients = new Set<http.ServerResponse>();
 let keepaliveInterval: ReturnType<typeof setInterval> | null = null;
+let tickInterval: ReturnType<typeof setInterval> | null = null;
 
 const corsHeaders: Record<string, string> = {
 	"Access-Control-Allow-Origin": "*",
@@ -131,9 +132,28 @@ export function startServer(port: number) {
 			client.write(": keepalive\n\n");
 		}
 	}, 30_000);
+
+	startTick();
+}
+
+function startTick() {
+	stopTick();
+	tickInterval = setInterval(() => {
+		if (!currentState.playing) return;
+		currentState = { ...currentState, currentTime: currentState.currentTime + 1 };
+		broadcast("playbackState", currentState);
+	}, 1000);
+}
+
+function stopTick() {
+	if (tickInterval) {
+		clearInterval(tickInterval);
+		tickInterval = null;
+	}
 }
 
 export function stopServer() {
+	stopTick();
 	if (keepaliveInterval) {
 		clearInterval(keepaliveInterval);
 		keepaliveInterval = null;
@@ -153,6 +173,9 @@ export function stopServer() {
 export function updateState(state: NowPlayingState) {
 	const prevTrackId = currentState.trackId;
 	currentState = state;
+
+	// Restart tick to resync with the renderer's real currentTime
+	startTick();
 
 	const event = state.trackId !== prevTrackId ? "trackChange" : "playbackState";
 	broadcast(event, currentState);
