@@ -1,0 +1,9 @@
+{
+	"name": "@addidotlol/kanade",
+	"description": "Exposes now-playing Tidal track info via HTTP/SSE for stream overlays",
+	"author": {
+		"name": "addison"
+	},
+	"type": "module",
+	"main": "./src/index.ts"
+}

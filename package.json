@@ -1,0 +1,24 @@
+{
+	"name": "@addidotlol/kanade-plugins",
+	"description": "Kanade - Now Playing API for TidaLuna",
+	"type": "module",
+	"author": "addison",
+	"scripts": {
+		"watch": "concurrently \"pnpm:build --watch\" pnpm:serve",
+		"build": "rimraf ./dist && tsx esbuild.config.ts",
+		"serve": "http-server ./dist -p 3000 -s --cors -c-1"
+	},
+	"devDependencies": {
+		"@types/node": "^25.x",
+		"@types/react": "^19.x",
+		"@types/react-dom": "^19.x",
+		"concurrently": "^9.x",
+		"esbuild": "^0.24.x",
+		"http-server": "^14.x",
+		"luna": "github:Inrixia/TidaLuna",
+		"oby": "^15.x",
+		"rimraf": "^6.x",
+		"tsx": "^4.x",
+		"typescript": "^5.x"
+	}
+}

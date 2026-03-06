@@ -1,0 +1,33 @@
+{
+	"name": "@addidotlol/kanade-svelte",
+	"version": "0.1.2",
+	"description": "Svelte 5 client for Kanade now-playing API",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/addidotlol/kanade",
+		"directory": "packages/svelte"
+	},
+	"type": "module",
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": ["dist"],
+	"scripts": {
+		"build": "svelte-package -i src",
+		"dev": "svelte-package -i src --watch"
+	},
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	},
+	"devDependencies": {
+		"@sveltejs/package": "^2.0.0",
+		"svelte": "^5.0.0",
+		"typescript": "^5.x"
+	}
+}
